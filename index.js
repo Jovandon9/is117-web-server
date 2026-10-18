@@ -1,0 +1,34 @@
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello, IS117! Your web server is working.');
+});
+
+app.get('/about', (req, res) => {
+  res.send('A web server receives a request and sends a response.');
+});
+
+app.use((req, res) => {
+  res.status(404);
+  res.send('Page not found.');
+});
+
+// Start the normal server only when this file is run directly.
+if (require.main === module) {
+  const port = 3000;
+
+  app.listen(port, (error) => {
+    if (error) {
+      console.error(error.message);
+      process.exitCode = 1;
+      return;
+    }
+
+    console.log(`Server running at http://localhost:${port}`);
+    console.log('Press Ctrl+C in this terminal to stop the server.');
+  });
+}
+
+// Let the test file use this application.
+module.exports = app;
